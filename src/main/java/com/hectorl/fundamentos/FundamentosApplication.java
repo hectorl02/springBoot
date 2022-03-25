@@ -1,6 +1,7 @@
 package com.hectorl.fundamentos;
 
 import com.hectorl.fundamentos.bean.MyBean;
+import com.hectorl.fundamentos.bean.MyBeanProperties;
 import com.hectorl.fundamentos.bean.MyBeanWithDependency;
 import com.hectorl.fundamentos.component.ComponentDependency;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -14,12 +15,18 @@ public class FundamentosApplication implements CommandLineRunner {
 	private ComponentDependency componentDependency;
 	private MyBean myBean;
 	private MyBeanWithDependency myBeanWithDependency;
+	private MyBeanProperties myBeanProperties;
 
-	public FundamentosApplication(@Qualifier("componentTwoImplement") ComponentDependency componentDependency, MyBean myBean , MyBeanWithDependency myBeanWithDependency){
+	public FundamentosApplication(
+			@Qualifier("componentTwoImplement") ComponentDependency componentDependency,
+			MyBean myBean , MyBeanWithDependency myBeanWithDependency,
+			MyBeanProperties myBeanProperties
+	){
 		this.componentDependency = componentDependency;
 		//inyecta dependecia
 		this.myBean = myBean;
 		this.myBeanWithDependency = myBeanWithDependency;
+		this.myBeanProperties = myBeanProperties;
 	}
 
 	public static void main(String[] args) {
@@ -32,5 +39,7 @@ public class FundamentosApplication implements CommandLineRunner {
 		// llamar la implementacion
 		myBean.print();
 		myBeanWithDependency.printWithDependency();
+		System.out.println(myBeanProperties.function());
+
 	}
 }
