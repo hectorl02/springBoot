@@ -7,13 +7,13 @@ import com.hectorl.fundamentos.component.ComponentDependency;
 import com.hectorl.fundamentos.entity.User;
 import com.hectorl.fundamentos.pojo.UserPojo;
 import com.hectorl.fundamentos.repository.UserRepository;
+import com.hectorl.fundamentos.service.UserService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.data.domain.Sort;
 
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -30,13 +30,15 @@ public class FundamentosApplication implements CommandLineRunner {
 	private MyBeanProperties myBeanProperties;
 	private UserPojo userPojo;
 	private UserRepository userRepository;
+	private UserService userService;
 
 	public FundamentosApplication(
 			@Qualifier("componentTwoImplement") ComponentDependency componentDependency,
 			MyBean myBean , MyBeanWithDependency myBeanWithDependency,
 			MyBeanProperties myBeanProperties,
 			UserPojo userPojo,
-			UserRepository userRepository
+			UserRepository userRepository,
+			UserService userService
 	){
 		this.componentDependency = componentDependency;
 		//inyecta dependecia
@@ -45,6 +47,7 @@ public class FundamentosApplication implements CommandLineRunner {
 		this.myBeanProperties = myBeanProperties;
 		this.userPojo = userPojo;
 		this.userRepository= userRepository;
+		this.userService = userService;
 	}
 
 	public static void main(String[] args) {
@@ -53,10 +56,26 @@ public class FundamentosApplication implements CommandLineRunner {
 
 	@Override
 	public  void run (String... args) {
-		//ejemplosAnteriores();
-		saveUsersDataBase();
-		getInformationJpqlfromUser();
+		// ejemplosAnteriores();
+		// saveUsersDataBase();
+		// getInformationJpqlfromUser();
+		saveWithErrorTransactiona();
 	}
+
+	private void saveWithErrorTransactiona(){
+		User test1 = new User("nametest1","test1@mail.com", LocalDate.now());
+		User test2 = new User("nametest2","test2@mail.com", LocalDate.now());
+		User test3 = new User("nametest3","test3@mail.com", LocalDate.now());
+		User test4 = new User("nametest4","test4@mail.com", LocalDate.now());
+
+		List<User> users = Arrays.asList(test1, test2, test3, test4);
+
+		userService.saveTransactional(users);
+		userService.getAllUsers().stream()
+				.forEach(user -> LOGGER.info("Usuario_del_metodo_transaccional: "+ user));
+
+	}
+
 
 	private void saveUsersDataBase(){
 		User user1 = new User("hector", "hector@mail.com", LocalDate.of(2022,03,28));
