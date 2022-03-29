@@ -62,17 +62,45 @@ public class FundamentosApplication implements CommandLineRunner {
 		User user1 = new User("hector", "hector@mail.com", LocalDate.of(2022,03,28));
 		User user2= new User("lucy", "lucy@mail.com", LocalDate.of(2022,01,28));
 		User user3= new User("lucy rosalba", "rosalba@mail.com", LocalDate.of(2022,02,28));
-		List<User> list = Arrays.asList(user1, user2, user3);
+		User user4= new User("motta", "motta@mail.com", LocalDate.of(2022,02,21));
+		List<User> list = Arrays.asList(user1, user2, user3,user4);
 		list.stream().forEach(userRepository::save);
 	}
 
 	private void getInformationJpqlfromUser(){
-		LOGGER.info("usuario hallado : " +
+		/* LOGGER.info("usuario hallado : " +
 				userRepository.findByUserEmail("hector@mail.com")
 				.orElseThrow(()->new RuntimeException("no usuario")));
 
 		userRepository.findAndSort("lucy", Sort.by("id").descending())
 				.stream().forEach(user -> LOGGER.info("ususario con sort : " + user));
+
+		userRepository.findByName("motta")
+				.stream()
+				.forEach(user -> LOGGER.info("us con query: "+ user));
+
+		LOGGER.info("us con query methodd: " + userRepository.findByEmailAndName("motta@mail.com","motta")
+				.orElseThrow(()->new RuntimeException("no usuario ###"))
+
+		);
+
+		userRepository.findByNameLike("%ta%")
+				.stream()
+				.forEach(user -> LOGGER.info("us like con query: "+ user));
+
+		userRepository.findByEmailAndName(null, "hector" )
+				.stream()
+				.forEach(user -> LOGGER.info("us con query mail o name: "+ user));
+		*/
+
+		userRepository.findByBirthDateBetween(LocalDate.of(2021,03,03), LocalDate.of(2022,05,01))
+				.stream()
+				.forEach(user -> LOGGER.info("us_entre_fechas "+ user));
+		;
+
+		userRepository.findByNameLikeOrderByIdDesc("%u%")
+				.stream()
+				.forEach(user -> LOGGER.info("us_con_like_y_ordenado "+ user));
 	}
 
 	private void ejemplosAnteriores() {
