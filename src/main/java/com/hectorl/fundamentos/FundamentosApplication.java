@@ -70,7 +70,7 @@ public class FundamentosApplication implements CommandLineRunner {
 		LOGGER.info("usuario hallado : " +
 				userRepository.findByUserEmail("hector@mail.com")
 				.orElseThrow(()->new RuntimeException("no usuario")));
-		
+
 		userRepository.findAndSort("lucy", Sort.by("id").descending())
 				.stream().forEach(user -> LOGGER.info("ususario con sort : " + user));
 	}
