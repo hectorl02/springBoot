@@ -93,7 +93,7 @@ public class FundamentosApplication implements CommandLineRunner {
 				.forEach(user -> LOGGER.info("us con query mail o name: "+ user));
 		*/
 
-		userRepository.findByBirthDateBetween(LocalDate.of(2021,03,03), LocalDate.of(2022,05,01))
+		/*userRepository.findByBirthDateBetween(LocalDate.of(2021,03,03), LocalDate.of(2022,05,01))
 				.stream()
 				.forEach(user -> LOGGER.info("us_entre_fechas "+ user));
 		;
@@ -101,6 +101,11 @@ public class FundamentosApplication implements CommandLineRunner {
 		userRepository.findByNameLikeOrderByIdDesc("%u%")
 				.stream()
 				.forEach(user -> LOGGER.info("us_con_like_y_ordenado "+ user));
+		*/
+
+		LOGGER.info("us_con_parameter: " + userRepository.getAllByBirthDateAndEmail(LocalDate.of(2022,02,21),"motta@mail.com")
+				.orElseThrow(()->new RuntimeException("no_usuario_con_parameter")));
+
 	}
 
 	private void ejemplosAnteriores() {
