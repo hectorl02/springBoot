@@ -29,7 +29,14 @@ public class User {
     @JsonManagedReference // evitar error stackoverflow
     private List<Post>posts = new ArrayList<>();
 
+
     public User() {
+    }
+
+    public User(String name, String email, LocalDate birthDate) {
+        this.name = name;
+        this.email = email;
+        this.birthDate = birthDate;
     }
 
     public Long getId() {

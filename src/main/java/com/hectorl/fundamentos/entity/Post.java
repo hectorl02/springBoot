@@ -12,7 +12,7 @@ public class Post {
     private Long id;
 
     @Column(name = "description", length = 255)
-    private String descripcion;
+    private String description;
 
     @ManyToOne
     private User user;
@@ -21,7 +21,7 @@ public class Post {
     }
 
     public Post(String descripcion, User user) {
-        this.descripcion = descripcion;
+        this.description = descripcion;
         this.user = user;
     }
 
@@ -33,12 +33,12 @@ public class Post {
         this.id = id;
     }
 
-    public String getDescripcion() {
-        return descripcion;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public User getUser() {
@@ -53,7 +53,7 @@ public class Post {
     public String toString() {
         return "Post{" +
                 "id=" + id +
-                ", descripcion='" + descripcion + '\'' +
+                ", description='" + description + '\'' +
                 ", user=" + user +
                 '}';
     }
