@@ -57,7 +57,7 @@ public class FundamentosApplication implements CommandLineRunner {
 	@Override
 	public  void run (String... args) {
 		// ejemplosAnteriores();
-		// saveUsersDataBase();
+		saveUsersDataBase();
 		// getInformationJpqlfromUser();
 		saveWithErrorTransactiona();
 	}
@@ -70,7 +70,11 @@ public class FundamentosApplication implements CommandLineRunner {
 
 		List<User> users = Arrays.asList(test1, test2, test3, test4);
 
-		userService.saveTransactional(users);
+		try {
+			userService.saveTransactional(users);
+		}catch (Exception e){
+			LOGGER.info("error_metodo_transaccional: "+ e);
+		}
 		userService.getAllUsers().stream()
 				.forEach(user -> LOGGER.info("Usuario_del_metodo_transaccional: "+ user));
 
